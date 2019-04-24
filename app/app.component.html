@@ -1,0 +1,199 @@
+<td-layout>
+  <td-navigation-drawer flex [sidenavTitle]="name" logo="assets:teradata" name="Firstname Lastname" email="firstname.lastname@company.com">
+    <mat-nav-list>
+      <a *ngFor="let item of routes" mat-list-item><mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
+    </mat-nav-list>
+    <div td-navigation-drawer-menu>
+      <mat-nav-list>
+        <a *ngFor="let item of usermenu" mat-list-item><mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
+      </mat-nav-list>
+    </div>
+  </td-navigation-drawer>
+  <td-layout-nav logo="assets:teradata" [toolbarTitle]="name" navigationRoute="/">
+    <button mat-icon-button td-menu-button tdLayoutToggle>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+      <span flex></span>
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+      <span>
+        <button mat-icon-button matTooltip="Alerts" [matMenuTriggerFor]="notificationsMenu">
+          <td-notification-count color="accent" [notifications]="4">
+            <mat-icon>notifications</mat-icon>
+          </td-notification-count>
+        </button>
+        <mat-menu #notificationsMenu="matMenu">
+          <td-menu>
+            <div td-menu-header class="mat-subhead">Notifications</div>
+            <mat-nav-list dense>
+              <ng-template let-last="last" ngFor [ngForOf]="[0,1,2]">
+                <a mat-list-item>
+                  <mat-icon matListAvatar>today</mat-icon>
+                  <h4 mat-line><span class="text-wrap">Candy sales are on the rise!</span></h4>
+                  <p mat-line>22 minutes ago</p>
+                </a>
+                <mat-divider *ngIf="!last"></mat-divider>
+              </ng-template>
+            </mat-nav-list>
+            <button mat-button color="accent" td-menu-footer>
+              See All Notifications
+            </button>
+          </td-menu>
+        </mat-menu>
+      </span>
+      <button mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+    <!-- router outlet goes here -->
+    <div flex>
+      <mat-toolbar>
+        <div flex layout="row" layout-align="start center">
+          <span flex>Overview</span>
+          <button mat-raised-button color="accent">
+            <span class="text-upper">Add</span>
+          </button>
+        </div>
+      </mat-toolbar>
+      <div layout-gt-sm="row" tdMediaToggle="gt-sm" [mediaClasses]="['push-sm']">
+        <div flex-gt-sm="60">
+          <mat-card>
+            <mat-card-title>Products Sales</mat-card-title>
+            <mat-card-subtitle>Recent sales for our products</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <div class="pad">
+              <div [style.height.px]="220">
+                <ngx-charts-bar-vertical-2d
+                  [scheme]="{ domain: [ '#EF6C00', '#0288D1', '#00796B', '#4527A0' ] }"
+                  [results]="multi"
+                  [barPadding]="18"
+                  [groupPadding]="28"
+                  [gradient]="true"
+                  [xAxis]="true"
+                  [yAxis]="true"
+                  [legend]="false"
+                  [showXAxisLabel]="false"
+                  [showYAxisLabel]="false">
+                </ngx-charts-bar-vertical-2d>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              <a mat-button color="accent" class="text-upper">
+                <span>View More</span>
+              </a>
+            </mat-card-actions>
+          </mat-card>
+          <mat-card tdMediaToggle="gt-sm" [mediaClasses]="['push-top']">
+            <mat-card-title>Customer Activity</mat-card-title>
+            <mat-card-subtitle>Recent activity from select members</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <mat-list class="pad-top-none" dense>
+              <ng-template let-item let-last="last" let-index="index" ngFor [ngForOf]="[0,1,2,3,4,5]">
+                <mat-list-item>
+                  <mat-icon matListAvatar>receipt</mat-icon>
+                  <h3 matLine>Customer Name activity type</h3>
+                  <p matLine>Saturday, May 12, 2018 at 10:30 AM</p>
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item>
+                      <span>Action</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item>
+                      <span>Action</span>
+                    </button>
+                  </mat-menu>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+              </ng-template>
+            </mat-list>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              <a mat-button color="accent" class="text-upper">
+                <span>View More</span>
+              </a>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <div flex-gt-sm="40">
+          <mat-card>
+            <mat-card-title>Alerts</mat-card-title>
+            <mat-card-subtitle>Items requiring attention</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <mat-list class="pad-top-none" dense>
+              <ng-template let-item let-last="last" let-index="index" ngFor [ngForOf]="[0,1]">
+                <mat-list-item>
+                  <mat-icon matListAvatar color="warn">warning</mat-icon>
+                  <h3 matLine>Customer Name alert type</h3>
+                  <p matLine>Saturday, May 12, 2018 at 10:30 AM</p>
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item>
+                      <span>Action</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item>
+                      <span>Action</span>
+                    </button>
+                  </mat-menu>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+              </ng-template>
+            </mat-list>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              <a mat-button color="accent" class="text-upper">
+                <span>View More</span>
+              </a>
+            </mat-card-actions>
+          </mat-card>
+          <mat-card tdMediaToggle="gt-sm" [mediaClasses]="['push-top']">
+            <mat-card-title>Favorites</mat-card-title>
+            <mat-card-subtitle>Your favorite products</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <mat-list class="pad-top-none" dense>
+              <ng-template let-item let-last="last" let-index="index" ngFor [ngForOf]="[0,1,2,3,4,5]">
+                <mat-list-item>
+                  <mat-icon matListAvatar color="accent">favorite</mat-icon>
+                  <h3 matLine>Favorite item name</h3>
+                  <p matLine>favorite item description</p>
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item>
+                      <span>Action</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item>
+                      <span>Action</span>
+                    </button>
+                  </mat-menu>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+              </ng-template>
+            </mat-list>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              <a mat-button color="accent" class="text-upper">
+                <span>View More</span>
+              </a>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <td-layout-footer>
+      <div layout="row" layout-align="start center">
+        <span class="mat-caption">Copyright &copy; 2018 Teradata. All rights reserved</span>
+      </div>
+    </td-layout-footer>
+  </td-layout-nav>
+</td-layout>
